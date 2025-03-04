@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<ul class="list-articles">
+    {% for i in post %}
+    <li>
+        <div class="article-panel">
+            <p class="first">Категория: {{i.cat.name}} | {% if i.author.username %} Автор: {{ i.author }} {% else %} Автор неизвестен {% endif %}</p>
+            <p class="last">Дата последнего обновления: {{i.time_update|date:"d/m/Y H:i:s"}}</p>
+        </div>
+
+        {% if i.photo %}
+        <img src="{{ i.photo.url }}" alt="" class="img-article-left thumb">
+        {% endif %}
+        
+        <h2>{{i.title}}</h2>
+        {% autoescape off %}
+        {{i.content|linebreaks|truncatewords:40}}
+        {% endautoescape off %}
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ i.get_absolute_url }}">Читать пост</a></p>
+    </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
+
+
+{% block navigation %}
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+        {% if page_obj.has_previous %}
+            <li class="page-num"><a href="?page{{ page_obj.previous_page_number }}">&lt;</a></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+            {% if page_obj.number|add:-2 <= i and i <= page_obj.number|add:2 and i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-num-selected page-num">{{ i }}</li>
+                {% else %}
+                    <li class="page-num"><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="page-num"><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+        {% endif %}
+    </ul>
+{% endif %}
+</nav>
+{% endblock %}

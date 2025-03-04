@@ -1,0 +1,7 @@
+{% for i in cats_db %}
+  {% if cat_id == i.id %}
+    <li class="selected">{{i.name}}</li>
+  {% else %}
+    <li><a href="{{ i.get_absolute_url }}">{{i.name}}</a></li>
+  {% endif %}
+{% endfor %}

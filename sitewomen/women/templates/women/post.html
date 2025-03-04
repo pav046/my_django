@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block breadcrumbs %}
+
+{% with post.my_tags.all as tags %}
+{% if tags %}
+
+    <ul class="tags-list">
+        <li>Теги:</li>
+        {% for i in tags %}
+            <li><a href="{{ i.get_absolute_url }}">{{ i.tag }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+{% endwith %}
+
+{% endblock %}
+
+
+{% block content %}
+
+{% if perms.women.change_women %}
+    <p><a href="{% url 'edit_page' post.slug %}">Редактировать</a></p>
+{% endif %}
+
+<h1>{{post.title}}</h1>
+ 
+{% if post.photo %}
+<p ><img class="img-article-left" src="{{post.photo.url}}"></p>
+{% endif %}
+ 
+{{post.content|linebreaks}}
+{% endblock %}

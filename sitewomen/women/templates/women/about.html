@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{describe}}</h1>
+
+{% for i in page %}
+    <p>{{ i.pk }}: {{ i }}</p>
+{% endfor %}
+
+<nav>
+    <ul>
+        {% for i in page_range %}
+        <li><a href="/about/?page={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+    </ul>
+
+</nav>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ title }}!</h1>
+<p>Чтобы войти, нужно авторизоваться по <a href="{% url 'users:login' %}">ссылке</a>.</p>
+{% endblock %}
